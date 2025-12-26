@@ -88,7 +88,7 @@ void tappingBenchmark(char k1, char k2) // <-- where the actual tapping happens
 	auto initialTime = std::chrono::system_clock::now(); //get time at start of tapping
 
 	#ifdef _WIN32
-	for(int i=0;i<keyPresses;i++) //for windows only
+	for(int i=1;i<keyPresses;i++) //for windows only
 	{
 		char userPress;
 		userPress = _getch();
@@ -100,7 +100,7 @@ void tappingBenchmark(char k1, char k2) // <-- where the actual tapping happens
 	}
 	#else
 	tcgetattr(STDIN_FILENO, &oldTerminal);
-	for(int i=0;i!=keyPresses;i++) //for unix only
+	for(int i=1;i!=keyPresses;i++) //for unix only
 	{
 		newTerminal = oldTerminal;
 		newTerminal.c_lflag &= ~(ICANON | ECHO);

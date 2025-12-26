@@ -25,6 +25,7 @@ int main()
 		if(userMenuSelection==0)
 		{
 			sixSeven = false;
+			break;
 		}
 		else if(userMenuSelection==1)
 		{
