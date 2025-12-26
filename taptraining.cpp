@@ -70,6 +70,21 @@ void tappingBenchmark(char k1, char k2) // <-- where the actual tapping happens
 		}
 	} while(keyPresses<2);
 
+	std::cout << "\nPress any key to start.";
+	#ifdef _WIN32 //for windows only
+	while(!_kbhit())
+	{
+		//hold until user hits keyboard
+	}
+	#else
+		struct termios oldTerminal, newTerminal; //terminal settings
+		tcgetattr(STDIN_FILENO, &oldTerminal);
+		newTerminal = oldTerminal;
+		newTerminal.c_lflag &= ~(ICANON | ECHO);
+		tcsetattr(STDIN_FILENO, TCSANOW, &newTerminal);
+		char holdProgram = getchar();
+		tcsetattr(STDIN_FILENO, TCSANOW, &oldTerminal);
+	#endif
 	auto initialTime = std::chrono::system_clock::now(); //get time at start of tapping
 
 	#ifdef _WIN32
@@ -84,7 +99,6 @@ void tappingBenchmark(char k1, char k2) // <-- where the actual tapping happens
 		}
 	}
 	#else
-	struct termios oldTerminal, newTerminal; //terminal settings
 	tcgetattr(STDIN_FILENO, &oldTerminal);
 	for(int i=0;i!=keyPresses;i++) //for unix only
 	{
